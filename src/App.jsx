@@ -307,8 +307,8 @@ export default function App() {
       style={{
         padding: "20px",
         fontFamily: "Arial",
-        width: "100vw",
-        height: "100vh",
+        width: "100%",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -320,7 +320,7 @@ export default function App() {
       <MapContainer
         center={position}
         zoom={12}
-        style={{ height: "80vh", width: "90vw", borderRadius: "10px" }}
+        style={{ height: "80vh", width: "96vw", borderRadius: "10px" }}
       >
         <TileLayer
           attribution='&copy; <a href="https://osm.org">OSM</a>'

@@ -22,14 +22,14 @@ export default function App() {
     const icons = {
       "24 Hours": "🕐",
       "Birthday Party": "🎉",
-      "Breakfast": "🍳",
+      Breakfast: "🍳",
       "Cashless Facility": "💳",
       "Dessert Center": "🍦",
       "Drive-Thru": "🚗",
-      "McCafe": "☕",
-      "McDelivery": "📦",
-      "Surau": "🕌",
-      "WiFi": "📶",
+      McCafe: "☕",
+      McDelivery: "📦",
+      Surau: "🕌",
+      WiFi: "📶",
       "Digital Order Kiosk": "📱",
       "Electric Vehicle": "🔌",
     };
@@ -112,14 +112,71 @@ export default function App() {
       chatDiv.id = "chat-control";
 
       chatDiv.innerHTML = `
-      <div style="padding:10px; background:white; width:320px; height:auto; box-shadow: 0 0 10px rgba(0,0,0,0.2); border-radius: 10px; color:black;">
-        <h4>🤖 Ask McD AI</h4>
-        <input id="chat-input" style="width:100%;margin-bottom:5px; padding:5px; border:1px solid #ccc; border-radius:4px;" placeholder="Ask something..." />
-        <button id="chat-send" style="width:100%; margin-bottom:5px; padding:8px; background:#007bff; color:white; border:none; border-radius:4px; cursor:pointer;">Ask</button>
-        <div id="chat-loading" style="display:none; margin-bottom:5px; color:#666;">⏳ Thinking...</div>
-        <div id="chat-answer" style="margin-top:10px; font-size:14px; max-height:300px; overflow:auto; line-height:1.4;"></div>
-      </div>
-    `;
+  <div style="
+    padding: 15px; 
+    background: white; 
+    width: 340px; 
+    height: auto; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
+    border-radius: 12px; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  ">
+    <h4 style="margin-top: 0; margin-bottom: 12px;">🤖 Ask McD AI</h4>
+
+    <input 
+      id="chat-input" 
+      type="text"
+      placeholder="Ask something..." 
+      style="
+        width: 100%; 
+        padding: 10px; 
+        margin-bottom: 8px; 
+        border: 1px solid #ccc; 
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+      "
+    />
+
+    <button 
+      id="chat-send" 
+      style="
+        width: 100%; 
+        padding: 10px; 
+        background: #ffcc00; 
+        color: #000; 
+        border: none; 
+        border-radius: 6px; 
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      "
+      onmouseover="this.style.background='#e6b800';"
+      onmouseout="this.style.background='#ffcc00';"
+    >
+      Ask
+    </button>
+
+    
+
+    <div 
+      id="chat-answer" 
+      style="
+        margin-top: 12px; 
+        font-size: 14px; 
+        max-height: 200px; 
+        overflow-y: auto; 
+        padding: 10px;
+        border: 1px solid #eee;
+        border-radius: 6px;
+        background: #fafafa;
+        line-height: 1.5;
+      "
+    ></div>
+  </div>
+`;
 
       const chatControl = L.control({ position: "topright" });
       chatControl.onAdd = () => chatDiv;
@@ -129,7 +186,6 @@ export default function App() {
 
       const input = chatDiv.querySelector("#chat-input");
       const button = chatDiv.querySelector("#chat-send");
-      const loading = chatDiv.querySelector("#chat-loading");
       const output = chatDiv.querySelector("#chat-answer");
 
       // Format text to handle lists and better formatting
@@ -160,15 +216,19 @@ export default function App() {
       };
 
       const askAI = async (question) => {
-        output.innerHTML = "";
-        loading.style.display = "block";
+        output.innerHTML =
+          '<div id="chat-loading" style="margin-top: 8px; color:#888; font-style: italic;">⏳ Thinking...</div>';
+        const loadingEl = document.getElementById("chat-loading");
 
         try {
-          const res = await fetch("https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: question }),
-          });
+          const res = await fetch(
+            "https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/chat",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ message: question }),
+            }
+          );
 
           if (!res.ok || !res.body) {
             output.innerHTML = "⚠️ Failed to get response from AI.";
@@ -181,14 +241,17 @@ export default function App() {
           let done = false;
           let fullText = "";
 
+          // Create answer container inside output
+          const answerEl = document.createElement("div");
+          output.appendChild(answerEl);
+
           while (!done) {
             const { value, done: doneReading } = await reader.read();
             if (value) {
+              if (loadingEl) loadingEl.style.display = "none";
               const chunk = decoder.decode(value);
               fullText += chunk;
-              // Format and display the accumulated text
-              output.innerHTML = formatResponse(fullText);
-              // Auto-scroll to bottom
+              answerEl.innerHTML = formatResponse(fullText);
               output.scrollTop = output.scrollHeight;
             }
             done = doneReading;
@@ -197,7 +260,7 @@ export default function App() {
           output.innerHTML = "❌ Error occurred while fetching response.";
           console.error(err);
         } finally {
-          loading.style.display = "none";
+          if (loadingEl) loadingEl.style.display = "none";
         }
       };
 
@@ -252,7 +315,7 @@ export default function App() {
         alignItems: "center",
       }}
     >
-      <h2>🗺️ McDonald's Map & 🤖 AI Chat</h2>
+      <h2>🗺️ McDonald's Map</h2>
 
       <MapContainer
         center={position}

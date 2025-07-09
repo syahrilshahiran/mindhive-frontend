@@ -39,14 +39,14 @@ export default function App() {
 
   const fetchCatchments = async (outletId) => {
     const res = await fetch(
-      `http://localhost:8001/outlet/${outletId}/catchment`
+      `https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/outlet/${outletId}/catchment`
     );
     const data = await res.json();
     setCatchments(data);
   };
 
   useEffect(() => {
-    fetch("http://localhost:8001/outlets")
+    fetch("https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/outlets")
       .then((res) => res.json())
       .then((data) => setOutlets(data))
       .catch((err) => console.error("Failed to fetch outlets:", err));
@@ -164,7 +164,7 @@ export default function App() {
         loading.style.display = "block";
 
         try {
-          const res = await fetch("http://localhost:8001/chat", {
+          const res = await fetch("https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: question }),
@@ -234,7 +234,7 @@ export default function App() {
         }
         isInitialized.current = false;
       };
-    }, [map]); // Empty dependency array to run only once
+    }, [map]);
 
     return null;
   }

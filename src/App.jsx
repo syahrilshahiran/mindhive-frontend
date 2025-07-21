@@ -46,7 +46,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    fetch("https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/outlets")
+    fetch("https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/outlets/")
       .then((res) => res.json())
       .then((data) => setOutlets(data))
       .catch((err) => console.error("Failed to fetch outlets:", err));
@@ -222,7 +222,7 @@ export default function App() {
 
         try {
           const res = await fetch(
-            "https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/chat",
+            "https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/chat/",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },

@@ -222,7 +222,7 @@ export default function App() {
 
         try {
           const res = await fetch(
-            "https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/chat/",
+            "https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/chat",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },

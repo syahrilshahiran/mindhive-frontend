@@ -39,7 +39,7 @@ export default function App() {
 
   const fetchCatchments = async (outletId) => {
     const res = await fetch(
-      `https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/outlet/${outletId}/catchment`
+      `https://sound-inez-syahrilshahiran-98f14f14.koyeb.app/outlets/${outletId}/catchment`
     );
     const data = await res.json();
     setCatchments(data);
